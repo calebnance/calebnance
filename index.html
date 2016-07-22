@@ -39,7 +39,7 @@
 				opacity: 0;
 			}
 			.animated {
-	    	-webkit-animation-duration: 1000ms;
+				-webkit-animation-duration: 1000ms;
 				animation-duration: 1000ms;
 				-webkit-animation-fill-mode: both;
 				animation-fill-mode: both;
@@ -77,23 +77,23 @@
 		</div><!-- /.container -->
 		<noscript id="deferred-styles">
 			<link href="/css/styles.min.css" rel="stylesheet" media="screen">
-    </noscript>
-    <script>
-      var loadDeferredStyles = function() {
-        var addStylesNode = document.getElementById("deferred-styles");
-        var replacement = document.createElement("div");
-        replacement.innerHTML = addStylesNode.textContent;
-        document.body.appendChild(replacement)
-        addStylesNode.parentElement.removeChild(addStylesNode);
-      };
-      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-          webkitRequestAnimationFrame || msRequestAnimationFrame;
-      if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
-      else window.addEventListener('load', loadDeferredStyles);
+		</noscript>
+		<script>
+			var loadDeferredStyles = function() {
+				var addStylesNode = document.getElementById("deferred-styles");
+				var replacement = document.createElement("div");
+				replacement.innerHTML = addStylesNode.textContent;
+				document.body.appendChild(replacement)
+				addStylesNode.parentElement.removeChild(addStylesNode);
+			};
+			var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+					webkitRequestAnimationFrame || msRequestAnimationFrame;
+			if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+			else window.addEventListener('load', loadDeferredStyles);
 			setTimeout(function(e){
 				var d = document.getElementById('content');
 				d.className += " animated fadeIn";
 			}, 400);
-    </script>
+		</script>
 	</body>
 </html>
