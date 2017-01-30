@@ -43,31 +43,43 @@ ul li {
 	margin-bottom: 8px;
 }
 
-a.codepen {
+ul li a {
 	border-bottom: 1px solid transparent;
-	color: #fcd000;
 }
 
+a.codepen {
+	color: #fcd000;
+}
 a.codepen:hover {
 	border-color: #fcd000;
 }
 
 a.github {
-	border-bottom: 1px solid transparent;
 	color: #6e5494;
 }
-
 a.github:hover {
 	border-color: #6e5494;
 }
 
 a.twitter {
-	border-bottom: 1px solid transparent;
 	color: #1da1f2;
 }
-
 a.twitter:hover {
 	border-color: #1da1f2;
+}
+
+a.stackoverflow {
+	color: #f48024;
+}
+a.stackoverflow:hover {
+	border-color: #f48024;
+}
+
+a.teamtreehouse {
+	color: #5cc27b;
+}
+a.teamtreehouse:hover {
+	border-color: #5cc27b;
 }
 
 @media (min-width: 768px) {
