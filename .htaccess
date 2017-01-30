@@ -12,3 +12,8 @@
     ExpiresByType application/x-icon "access plus 1 year"
 </IfModule>
 # END EXPIRES
+
+# Force HTTPS
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://calebnance.com/$1 [R=301,L]
