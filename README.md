@@ -15,6 +15,6 @@ Creators
 
 Copyright and license
 --------------------
-Code copyright 2016 the [Black Mirror NoseDive App Author(s)](https://github.com/calebnance/calebnance/graphs/contributors) Code released under the [MIT License](https://github.com/calebnance/calebnance/blob/master/LICENSE).
+Code copyright 2016 the [calebnance.com Author(s)](https://github.com/calebnance/calebnance/graphs/contributors) Code released under the [MIT License](https://github.com/calebnance/calebnance/blob/master/LICENSE).
 
 ##### Built With :heart:
