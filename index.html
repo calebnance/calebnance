@@ -58,6 +58,7 @@
 		</style>
 	</head>
 	<body>
+
 		<div id="content" class="container">
 			<div class="row">
 				<div class="col-xs-12 col-md-7">
@@ -76,9 +77,11 @@
 				</div><!-- /.col-xs-12 -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->
+
 		<noscript id="deferred-styles">
 			<link href="/css/styles.min.css" rel="stylesheet" media="screen">
 		</noscript>
+
 		<script>
 			var loadDeferredStyles = function() {
 				var addStylesNode = document.getElementById("deferred-styles");
@@ -87,14 +90,18 @@
 				document.body.appendChild(replacement)
 				addStylesNode.parentElement.removeChild(addStylesNode);
 			};
+
 			var raf = requestAnimationFrame || mozRequestAnimationFrame ||
 					webkitRequestAnimationFrame || msRequestAnimationFrame;
+
 			if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
 			else window.addEventListener('load', loadDeferredStyles);
+
 			setTimeout(function(e){
 				var d = document.getElementById('content');
 				d.className += " animated fadeIn";
 			}, 400);
 		</script>
+
 	</body>
 </html>

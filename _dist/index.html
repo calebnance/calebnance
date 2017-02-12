@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Language" content="en"><title>Caleb Nance | Front End, Back End Developer</title><link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/img/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png"><link rel="manifest" href="/img/manifest.json"><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><style>body {
+				background-color: #282c34;
+				color: #abb2bf;
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+				font-size: 20px;
+				font-weight: 200;
+				line-height: 1.42857143;
+				margin: 0;
+				padding-top: 31px;
+			}
+			#content {
+				opacity: 0;
+			}
+			.animated {
+				-webkit-animation-duration: 1000ms;
+				animation-duration: 1000ms;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			@-webkit-keyframes fadeIn {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
+			@keyframes fadeIn {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
+			.fadeIn {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}</style></head><body><div id="content" class="container"><div class="row"><div class="col-xs-12 col-md-7"><main><h1>Hi, I'm Caleb!</h1><h2>A passionate Front End / Back End Developer.</h2><p>I create cool, usable things on the internet.</p><ul><li>I am on <a href="https://twitter.com/calebnance" class="twitter">twitter</a></li><li>I prototype stuff on <a href="https://codepen.io/calebnance" class="codepen">codepen</a></li><li>My open-source code is on <a href="https://github.com/calebnance" class="github">github</a></li><li>A few things I've learned on <a href="https://teamtreehouse.com/calebnance" class="teamtreehouse">teamtreehouse</a></li><li>Tech questions I've answered on <a href="https://stackoverflow.com/users/1308719/caleb-nance" class="stackoverflow">stackoverflow</a></li></ul></main></div><!-- /.col-xs-12 --></div><!-- /.row --></div><!-- /.container --><noscript id="deferred-styles"><link href="/css/styles.min.css" rel="stylesheet" media="screen"></noscript><script>var loadDeferredStyles = function() {
+				var addStylesNode = document.getElementById("deferred-styles");
+				var replacement = document.createElement("div");
+				replacement.innerHTML = addStylesNode.textContent;
+				document.body.appendChild(replacement)
+				addStylesNode.parentElement.removeChild(addStylesNode);
+			};
+
+			var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+					webkitRequestAnimationFrame || msRequestAnimationFrame;
+
+			if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+			else window.addEventListener('load', loadDeferredStyles);
+
+			setTimeout(function(e){
+				var d = document.getElementById('content');
+				d.className += " animated fadeIn";
+			}, 400);</script></body></html>
