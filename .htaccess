@@ -72,6 +72,6 @@
 # END GZIP
 
 # Force HTTPS
-#RewriteEngine On
-#RewriteCond %{SERVER_PORT} 80
-#RewriteRule ^(.*)$ https://calebnance.com/$1 [R=301,L]
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://calebnance.com/$1 [R=301,L]
