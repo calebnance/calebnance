@@ -3,7 +3,13 @@ calebnance.com
 
 - Gulp
 - SASS
-- PWA (Progressive Web App) **Score: 91/100**
+- PWA (Progressive Web App)
+
+- [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) Score
+    - Progressive Web App: **100/100**
+    - Performance: **99/100**
+    - Accessibility: **97/100**
+    - Best Practices: **92/100**
 
 [Gulp](https://www.npmjs.com/package/gulp) Packages
 --------------------
