@@ -1,10 +1,7 @@
 calebnance.com
 =========
 
-- Gulp
-- SASS
-- PWA (Progressive Web App)
-
+- Gulp / SASS / PWA (Progressive Web App)
 - [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) Score
     - Progressive Web App: **100/100**
     - Performance: **99/100**
@@ -14,7 +11,7 @@ calebnance.com
     - Mobile: **99/100**
     - Desktop: **99/100**
 
-[Gulp](https://www.npmjs.com/package/gulp) Packages
+[Gulp](https://www.npmjs.com/package/gulp) Packages Used
 --------------------
 - [autoprefixer](https://www.npmjs.com/package/gulp-autoprefixer)
 - [clean css](https://www.npmjs.com/package/gulp-clean-css)
@@ -29,6 +26,8 @@ calebnance.com
 - [uglify](https://www.npmjs.com/package/gulp-uglify)
 
 With simple gulp tasks: `gulp server`, `gulp watch`, `gulp dist`, and `gulp clean`.
+
+***TODO:*** Optimize gulp dev process/build
 
 Creators
 --------------------
