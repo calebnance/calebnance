@@ -1,0 +1,113 @@
+// simple sass file.. no need to break it out any further..
+
+// variables
+$mainColor: #abb2bf;
+// $mainBgColor: #282c34;
+$mainBgColor: #28200f;
+
+$codepen: #fcd000;
+$github: #6e54ff;
+$stackoverflow: #f48024;
+$teamtreehouse: #5cc27b;
+$twitter: #1da1f2;
+
+// start styles
+body {
+	background-color: $mainBgColor;
+	color: $mainColor;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	font-size: 20px;
+	font-weight: 200;
+	padding-top: 32px;
+}
+
+main {
+	margin: 0 16px;
+}
+
+h1 {
+	font-size: 36px;
+	font-weight: 200;
+	line-height: 40px;
+	margin-top: 0;
+}
+
+h2 {
+	font-size: 26px;
+	font-weight: 200;
+}
+
+a,
+a:hover {
+	transition: border-color 600ms;
+	text-decoration: none;
+}
+
+p {
+	margin-bottom: 0.67em;
+}
+
+ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+ul li {
+	margin-bottom: 8px;
+}
+
+ul li a {
+	border-bottom: 1px solid transparent;
+}
+
+a {
+  &.codepen {
+  	color: $codepen;
+
+    &:hover {
+    	border-color: $codepen;
+    }
+  }
+
+	&.github {
+		color: $github;
+
+		&:hover {
+			border-color: $github;
+		}
+	}
+
+	&.twitter {
+		color: $twitter;
+
+		&:hover {
+			border-color: $twitter;
+		}
+	}
+
+	&.stackoverflow {
+		color: $stackoverflow;
+
+		&:hover {
+			border-color: $stackoverflow;
+		}
+	}
+
+	&.teamtreehouse {
+		color: $teamtreehouse;
+
+		&:hover {
+			border-color: $teamtreehouse;
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	body {
+		padding-top: 72px;
+	}
+
+	main {
+		margin: 0 36px;
+	}
+}

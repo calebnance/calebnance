@@ -1,13 +1,11 @@
-let version = '0.1';
-
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open('starter').then(cache => {
+    caches.open('calebnance').then(cache => {
 
       return cache.addAll([
         '/',
         '/index.html',
-        '/offline.html',
+        '/css/styles.min.css'
       ])
       .then(() => self.skipWaiting());
     })
@@ -19,22 +17,6 @@ self.addEventListener('activate',  event => {
 });
 
 self.addEventListener('fetch', event => {
-  if (
-    event.request.mode === 'navigate'
-    ||
-    (
-      event.request.method === 'GET'
-      &&
-      event.request.headers.get('accept').includes('text/html')
-    )
-  ) {
-    event.respondWith(
-      fetch(createCacheBustedRequest(event.request.url)).catch( error => {
-
-        return caches.match('offline.html');
-      })
-    );
-  } else {
     event.respondWith(
       caches.match(
         event.request, {
@@ -47,7 +29,6 @@ self.addEventListener('fetch', event => {
         // console.log('Fetch failed; returning offline page instead.', error);
       })
     );
-  }
 });
 
 function createCacheBustedRequest(url) {

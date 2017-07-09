@@ -2,30 +2,24 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="Content-Language" content="en">
 		<title>Caleb Nance | Front End, Back End Developer</title>
-		<link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
-		<link rel="icon" type="image/png" sizes="192x192" href="/img/android-icon-192x192.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-		<link rel="manifest" href="/img/manifest.json">
-		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
-		<meta name="theme-color" content="#ffffff">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-title" content="calebnance">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="apple-touch-icon" sizes="72x72" href="img/app/cn-app-72.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="img/app/cn-app-144.png">
+		<link rel="icon" type="image/png" sizes="192x192" href="img/app/cn-app-192.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="img/app/cn-app-96.png">
+		<meta name="mobile-web-app-capable" content="yes">
+		<link rel="manifest" href="manifest.json">
+		<meta name="msapplication-TileColor" content="#28200f">
+		<meta name="theme-color" content="#28200f">
 		<style>
 			body {
-				background-color: #282c34;
+				background-color: #28200f;
 				color: #abb2bf;
 				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 				font-size: 20px;
@@ -58,40 +52,42 @@
 		</style>
 	</head>
 	<body>
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-			ga('create', 'UA-8445331-1', 'auto');
-			ga('send', 'pageview');
-		</script>
-
-		<div id="content" class="container">
-			<div class="row">
-				<div class="col-xs-12 col-md-7">
-					<main>
-						<h1>Hi, I'm Caleb!</h1>
-						<h2>A passionate Front End / Back End Developer.</h2>
-						<p>I create cool, usable things on the internet.</p>
-						<ul>
-							<li>I am on <a href="https://twitter.com/calebnance" class="twitter">twitter</a></li>
-							<li>I prototype stuff on <a href="https://codepen.io/calebnance" class="codepen">codepen</a></li>
-							<li>My open-source code is on <a href="https://github.com/calebnance" class="github">github</a></li>
-							<li>A few things I've learned on <a href="https://teamtreehouse.com/calebnance" class="teamtreehouse">teamtreehouse</a></li>
-							<li>Tech questions I've answered on <a href="https://stackoverflow.com/users/1308719/caleb-nance" class="stackoverflow">stackoverflow</a></li>
-						</ul>
-					</main>
-				</div><!-- /.col-xs-12 -->
-			</div><!-- /.row -->
-		</div><!-- /.container -->
+		<div id="content">
+			<main>
+				<h1>Hi, I'm Caleb!</h1>
+				<h2>A passionate Front End / Back End Developer.</h2>
+				<p>I create cool, usable things on the internet.</p>
+				<ul>
+					<li>I am on <a href="https://twitter.com/calebnance" class="twitter">twitter</a></li>
+					<li>I prototype stuff on <a href="https://codepen.io/calebnance" class="codepen">codepen</a></li>
+					<li>My open-source code is on <a href="https://github.com/calebnance" class="github">github</a></li>
+					<li>A few things I've learned on <a href="https://teamtreehouse.com/calebnance" class="teamtreehouse">teamtreehouse</a></li>
+					<li>Tech questions I've answered on <a href="https://stackoverflow.com/users/1308719/caleb-nance" class="stackoverflow">stackoverflow</a></li>
+				</ul>
+			</main>
+		</div>
 
 		<noscript id="deferred-styles">
-			<link href="/css/styles.min.css" rel="stylesheet" media="screen">
+			<link href="css/styles.min.css" rel="stylesheet" media="screen">
 		</noscript>
 
 		<script>
+			// service worker
+			if('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('service-worker.js', { scope: '/' })
+					.then(function(registration) {
+						// service worker registered
+						// console.log('Service Worker Registered');
+					}
+				);
+
+				navigator.serviceWorker.ready.then(function(registration) {
+					// service worker ready
+					// console.log('Service Worker Ready');
+				});
+			}
+
 			var loadDeferredStyles = function() {
 				var addStylesNode = document.getElementById("deferred-styles");
 				var replacement = document.createElement("div");
@@ -110,6 +106,16 @@
 				var d = document.getElementById('content');
 				d.className += " animated fadeIn";
 			}, 400);
+    </script>
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-8445331-1', 'auto');
+			ga('send', 'pageview');
 		</script>
 
 	</body>

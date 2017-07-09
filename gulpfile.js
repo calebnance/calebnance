@@ -4,17 +4,20 @@ var del = require('del');
 var gulp = require('gulp');
 var htmlmin = require('gulp-htmlmin');
 var notifier = require('node-notifier');
+var rename = require('gulp-rename');
 var sass = require('gulp-sass');
+var shell = require('gulp-shell');
 var stripDebug = require('gulp-strip-debug');
 var uglify = require('gulp-uglify');
 
-var distFolder = '_dist';
+var distFolder = 'dist';
 
 var mainTasks = [
   'clean',
   'sass',
   'html',
   'img',
+  'htaccess',
   'pwa'
 ];
 
@@ -22,61 +25,77 @@ var devTasks = [
   'watch'
 ];
 
-var prodTasks = [];
+// start dev server (express)
+gulp.task('server', shell.task(['nodemon server.js']));
 
-// distribution gulp task
+// distribution gulp task + watch
 gulp.task('dist', ['clean'], function() {
 
-  gulp.start('html', 'sass');
+  gulp.start(mainTasks.concat(devTasks));
 
+});
+
+/***************
+ * watch tasks *
+ ***************/
+gulp.task('watch', [
+  'js:watch',
+  'sass:watch',
+  'html:watch'
+]);
+
+/* js watch */
+gulp.task('js:watch', function() {
+  gulp.watch('./src/js/**/*.js', ['js']);
+});
+
+/* sass watch */
+gulp.task('sass:watch', function() {
+  gulp.watch('./src/scss/**/*.scss', ['sass']);
+});
+
+/* html watch */
+gulp.task('html:watch', function() {
+  gulp.watch('./src/**/*.html', ['html']);
 });
 
 // clean up old dist folder
 gulp.task('clean', function() {
 
-  return del(
-    [
-      distFolder + '/*.html',
-      distFolder + '/css'
-    ]
-  );
+  return del([distFolder]);
 });
 
 // html task (minification)
 gulp.task('html', function() {
 
-  return gulp.src('*.html')
+  return gulp.src('./src/html/*.html')
     .pipe(htmlmin({
-      collapseWhitespace: true
+      collapseWhitespace: true,
+      removeComments: true
     }))
-    .pipe(gulp.dest('./' + distFolder));
+    .pipe(gulp.dest(distFolder + '/'));
 });
 
 // sass to css (autoprefixer + minification + rename)
 gulp.task('sass', function() {
-  gulp.src(['./src/scss/main.scss'])
-  .pipe(sass().on('error', notifyDev))
-  .pipe(autoprefixer({
-    browsers: [
-      'Chrome >= 25', // released 2013-02-21
-      'Firefox >= 25', // released 2013-10-29
-      'Explorer >= 10', // released 2012-10-26
-      'Opera >= 15', // released 2013-07-02
-      'Safari >= 5' // released 2010-06-07
-    ],
-    cascade: false
-  }))
-  .pipe(cleanCSS())
-  .pipe(rename({
-    basename: 'styles.min'
-  }))
-  .pipe(gulp.dest('./' + distFolder + '/css'));
+
+  return gulp.src('./src/scss/main.scss')
+    .pipe(sass().on('error', notifyDev))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }).on('error', notifyDev))
+    .pipe(cleanCSS())
+    .pipe(rename({
+      basename: 'styles.min'
+    }))
+    .pipe(gulp.dest('./' + distFolder + '/css'));
 });
 
 gulp.task('img', function() {
 
   return gulp.src('./src/assets/img/**')
-    .pipe(gulp.dest('./' + distFolder + '/img'));
+    .pipe(gulp.dest(distFolder + '/img'));
 });
 
 /*******
@@ -85,21 +104,29 @@ gulp.task('img', function() {
 gulp.task('pwa', ['manifest', 'serviceWorker'], function() {
 
   return gulp.src('./manifest.json')
-    .pipe(gulp.dest('./' + distFolder));
+    .pipe(gulp.dest(distFolder));
 });
 
 gulp.task('manifest', function() {
-  // move this to root (_dist)
+  // move this to root (dist)
 
   return gulp.src('./src/server/manifest.json')
-    .pipe(gulp.dest('./' + distFolder));
+    .pipe(gulp.dest(distFolder));
 });
 
 gulp.task('serviceWorker', function() {
-  // move this to root (_dist)
+  // move this to root (dist)
 
   return gulp.src('./src/js/service-worker.js')
-    .pipe(gulp.dest('./' + distFolder));
+    .pipe(gulp.dest(distFolder));
+});
+
+// .htaccess moved over
+gulp.task('htaccess', function() {
+  // move this to root (dist)
+
+  return gulp.src('./src/server/.htaccess')
+    .pipe(gulp.dest(distFolder));
 });
 
 // this will notify the dev working.. something is wrong

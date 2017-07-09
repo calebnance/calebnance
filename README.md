@@ -3,7 +3,7 @@ calebnance.com
 
 - Gulp
 - SASS
-- PWA (Progressive Web App) Score:
+- PWA (Progressive Web App) **Score: 91/100**
 
 [Gulp](https://www.npmjs.com/package/gulp) Packages
 --------------------
@@ -12,9 +12,14 @@ calebnance.com
 - [del](https://www.npmjs.com/package/del)
 - [htmlmin](https://www.npmjs.com/package/gulp-htmlmin)
 - [node notifier](https://www.npmjs.com/package/node-notifier)
+- [nodemon](https://www.npmjs.com/package/nodemon)
+- [rename](https://www.npmjs.com/package/gulp-rename)
 - [sass](https://www.npmjs.com/package/gulp-sass)
+- [shell](https://www.npmjs.com/package/gulp-shell)
 - [strip debug](https://www.npmjs.com/package/gulp-strip-debug)
 - [uglify](https://www.npmjs.com/package/gulp-uglify)
+
+With simple gulp tasks: `gulp server`, `gulp watch`, `gulp dist`, and `gulp clean`.
 
 Creators
 --------------------
