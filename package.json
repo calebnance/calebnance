@@ -1,25 +1,36 @@
 {
   "name": "calebnance",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "calebnance.com (gulp)",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "gulp clean",
+    "dev": "npm run clean && npm run dev:build",
+    "dev:build": "gulp dist"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/calebnance/calebnance.git"
   },
-  "author": "",
+  "author": "calebnance",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/calebnance/calebnance/issues"
   },
   "homepage": "https://github.com/calebnance/calebnance#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
     "del": "^2.2.2",
+    "express": "^4.15.3",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
     "gulp-clean-css": "^3.0.2",
-    "gulp-htmlmin": "^3.0.0"
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-shell": "^0.6.3",
+    "gulp-strip-debug": "^1.1.0",
+    "gulp-uglify": "^3.0.0",
+    "node-notifier": "^5.1.2",
+    "nodemon": "^1.11.0"
   }
 }
