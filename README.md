@@ -10,7 +10,7 @@ calebnance.com
     - Performance: **99/100**
     - Accessibility: **97/100**
     - Best Practices: **92/100**
-- [Google PageSpeed Insights] Score
+- [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) Score
     - Mobile: **99/100**
     - Desktop: **99/100**
 
