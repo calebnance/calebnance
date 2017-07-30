@@ -3,10 +3,17 @@
 // variables
 $mainColor: #abb2bf;
 // $mainBgColor: #282c34;
-$mainBgColor: #28200f;
+// $mainBgColor: #28200f;
+$mainBgColor: #1d2d3a;
+
+$colorBlack: #000;
+$colorGrey: #333;
+$colorWhite: #fff;
 
 $codepen: #fcd000;
+$facebook: #3b5998;
 $github: #6e54ff;
+$linkedin: #0077b5;
 $stackoverflow: #f48024;
 $teamtreehouse: #5cc27b;
 $twitter: #1da1f2;
@@ -39,64 +46,88 @@ h2 {
 
 a,
 a:hover {
-	transition: border-color 600ms;
+	transition: background-color 400ms, border-color 800ms, color 400ms;
 	text-decoration: none;
 }
 
 p {
-	margin-bottom: 0.67em;
-}
+	line-height: 22px;
+	margin-bottom: 20px;
 
-ul {
-	list-style: none;
-	padding-left: 0;
-}
-
-ul li {
-	margin-bottom: 8px;
-}
-
-ul li a {
-	border-bottom: 1px solid transparent;
+	&.social {
+		line-height: 40px;
+	}
 }
 
 a {
+	border-bottom: 2px solid transparent;
+	color: $colorWhite;
+	margin-right: 3px;
+	padding: 4px 8px;
+
   &.codepen {
-  	color: $codepen;
+  	background-color: $codepen;
+		color: $colorGrey;
 
     &:hover {
+			background-color: transparent;
     	border-color: $codepen;
+			color: $colorWhite;
     }
   }
 
-	&.github {
-		color: $github;
+	&.facebook {
+		background-color: $facebook;
+		color: $colorWhite;
 
 		&:hover {
+			background-color: transparent;
+			border-color: $facebook;
+		}
+	}
+
+	&.github {
+		background-color: $github;
+		color: $colorWhite;
+
+		&:hover {
+			background-color: transparent;
 			border-color: $github;
 		}
 	}
 
-	&.twitter {
-		color: $twitter;
+	&.linkedin {
+		background-color: $linkedin;
 
 		&:hover {
+			background-color: transparent;
+			border-color: $linkedin;
+		}
+	}
+
+	&.twitter {
+		background-color: $twitter;
+
+		&:hover {
+			background-color: transparent;
 			border-color: $twitter;
 		}
 	}
 
 	&.stackoverflow {
-		color: $stackoverflow;
+		background-color: $stackoverflow;
 
 		&:hover {
+			background-color: transparent;
 			border-color: $stackoverflow;
 		}
 	}
 
 	&.teamtreehouse {
-		color: $teamtreehouse;
+		background-color: $teamtreehouse;
 
 		&:hover {
+			background-color: transparent;
 			border-color: $teamtreehouse;
 		}
 	}
