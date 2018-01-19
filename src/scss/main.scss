@@ -10,6 +10,7 @@ $colorBlack: #000;
 $colorGrey: #333;
 $colorWhite: #fff;
 
+$blog: #275d8b;
 $codepen: #fcd000;
 $facebook: #3b5998;
 $github: #6e54ff;
@@ -52,11 +53,15 @@ a:hover {
 
 p {
 	line-height: 22px;
-	margin-bottom: 20px;
+	margin-bottom: 24px;
 
 	&.social {
 		line-height: 40px;
 	}
+}
+
+.spacer {
+	height: 24px;
 }
 
 a {
@@ -64,6 +69,17 @@ a {
 	color: $colorWhite;
 	margin-right: 3px;
 	padding: 4px 8px;
+
+	&.blog {
+  	background-color: $blog;
+		color: $colorWhite;
+
+    &:hover {
+			background-color: transparent;
+    	border-color: $blog;
+			color: $colorWhite;
+    }
+  }
 
   &.codepen {
   	background-color: $codepen;

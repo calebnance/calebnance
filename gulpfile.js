@@ -22,6 +22,7 @@ var mainTasks = [
 ];
 
 var devTasks = [
+  'server',
   'watch'
 ];
 
