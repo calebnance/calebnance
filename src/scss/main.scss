@@ -52,8 +52,16 @@ a:hover {
 }
 
 p {
-	line-height: 22px;
+	line-height: 30px;
 	margin-bottom: 24px;
+
+	@media (min-width: 600px) {
+		line-height: 22px;
+	}
+
+	strong {
+		font-weight: 400;
+	}
 
 	&.social {
 		line-height: 40px;
@@ -123,28 +131,34 @@ a {
 
 	&.twitter {
 		background-color: $twitter;
+		color: $colorBlack;
 
 		&:hover {
 			background-color: transparent;
 			border-color: $twitter;
+			color: $colorWhite;
 		}
 	}
 
 	&.stackoverflow {
 		background-color: $stackoverflow;
+		color: $colorGrey;
 
 		&:hover {
 			background-color: transparent;
 			border-color: $stackoverflow;
+			color: $colorWhite;
 		}
 	}
 
 	&.teamtreehouse {
 		background-color: $teamtreehouse;
+		color: $colorGrey;
 
 		&:hover {
 			background-color: transparent;
 			border-color: $teamtreehouse;
+			color: $colorWhite;
 		}
 	}
 }
