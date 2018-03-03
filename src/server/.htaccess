@@ -71,6 +71,9 @@
 </ifModule>
 # END GZIP
 
+# Set Charset, Set
+AddType 'text/html; charset=UTF-8' html
+
 # Force HTTPS
 RewriteEngine On
 RewriteCond %{SERVER_PORT} 80
