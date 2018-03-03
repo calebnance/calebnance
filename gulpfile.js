@@ -2,6 +2,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var cleanCSS = require('gulp-clean-css');
 var del = require('del');
 var gulp = require('gulp');
+var gzip = require('gulp-gzip');
 var htmlmin = require('gulp-htmlmin');
 var notifier = require('node-notifier');
 var rename = require('gulp-rename');
@@ -89,6 +90,9 @@ gulp.task('sass', function() {
     .pipe(cleanCSS())
     .pipe(rename({
       basename: 'styles.min'
+    }))
+    .pipe(gzip({
+      append: false
     }))
     .pipe(gulp.dest('./' + distFolder + '/css'));
 });
