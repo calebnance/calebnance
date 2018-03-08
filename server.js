@@ -3,7 +3,10 @@ var notifier = require('node-notifier');
 var app = express();
 var port = 8000;
 
-app.use(express.static(`${__dirname}/dist`, {
+var isProduction = process.env.NODE_ENV === 'production' ? true : false;
+var distFolder = isProduction ? 'dist_prod' : 'dist_local';
+
+app.use(express.static(`${__dirname}/${distFolder}`, {
   setHeaders: function (res) {
     res.append('Access-Control-Allow-Origin', '*');
   }

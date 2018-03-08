@@ -4,6 +4,7 @@ var del = require('del');
 var gulp = require('gulp');
 var gzip = require('gulp-gzip');
 var htmlmin = require('gulp-htmlmin');
+var minifyInline = require('gulp-minify-inline');
 var notifier = require('node-notifier');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
@@ -11,7 +12,9 @@ var shell = require('gulp-shell');
 var stripDebug = require('gulp-strip-debug');
 var uglify = require('gulp-uglify');
 
-var distFolder = 'dist';
+var isProduction = process.env.NODE_ENV === 'production' ? true : false;
+var distFolder = isProduction ? 'dist_prod' : 'dist_local';
+
 
 var mainTasks = [
   'clean',
@@ -27,14 +30,20 @@ var devTasks = [
   'watch'
 ];
 
+var prodTasks = [];
+
 // start dev server (express)
 gulp.task('server', shell.task(['nodemon server.js']));
 
 // distribution gulp task + watch
 gulp.task('dist', ['clean'], function() {
 
-  gulp.start(mainTasks.concat(devTasks));
-
+  if (isProduction) {
+    gulp.start(mainTasks.concat(prodTasks));
+  } else {
+    gulp.start(mainTasks.concat(devTasks));
+  }
+  
 });
 
 /***************
@@ -64,13 +73,14 @@ gulp.task('html:watch', function() {
 // clean up old dist folder
 gulp.task('clean', function() {
 
-  return del([distFolder]);
+  return del(['dist_prod', 'dist_local']);
 });
 
 // html task (minification)
 gulp.task('html', function() {
 
   return gulp.src('./src/html/*.html')
+    .pipe(minifyInline())
     .pipe(htmlmin({
       collapseWhitespace: true,
       removeComments: true
@@ -91,9 +101,9 @@ gulp.task('sass', function() {
     .pipe(rename({
       basename: 'styles.min'
     }))
-    .pipe(gzip({
-      append: false
-    }))
+    // .pipe(gzip({
+    //   append: false
+    // }))
     .pipe(gulp.dest('./' + distFolder + '/css'));
 });
 

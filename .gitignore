@@ -1,4 +1,6 @@
 node_modules/
 dist/
+dist_local/
+dist_prod/
 *.log
 package-lock.json
