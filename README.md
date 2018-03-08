@@ -1,5 +1,4 @@
-calebnance.com
-=========
+# calebnance.com
 
 - Gulp / SASS / PWA (Progressive Web App)
 - [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) Score
@@ -12,15 +11,12 @@ calebnance.com
     - Mobile Optimization: **99/100**
     - Desktop Optimization: **99/100**
 
-### Installation / Builds
-* Run: `npm install`
-* Local Build + Serve + Watch
-    * Run: `npm run dev`
-* Production Build
-    * Run: `npm run prod`
+## Installation / Builds
+* Install: `npm install`
+* Local Build + Serve + Watch: `npm run dev`
+* Production Build: `npm run prod`
 
-### [Gulp](https://www.npmjs.com/package/gulp) Packages Used
---------------------
+## [Gulp](https://www.npmjs.com/package/gulp) Packages Used
 - [autoprefixer](https://www.npmjs.com/package/gulp-autoprefixer)
 - [clean css](https://www.npmjs.com/package/gulp-clean-css)
 - [del](https://www.npmjs.com/package/del)
@@ -37,14 +33,12 @@ calebnance.com
 
 With simple gulp tasks: `gulp server`, `gulp watch`, `gulp dist`, and `gulp clean`.
 
-Creators
---------------------
+## Creators
 **Caleb Nance**
 - <https://twitter.com/calebnance>
 - <https://github.com/calebnance>
 
-Copyright and license
---------------------
+## Copyright and license
 Code copyright 2016-2017 the [calebnance.com Author(s)](https://github.com/calebnance/calebnance/graphs/contributors) Code released under the [MIT License](https://github.com/calebnance/calebnance/blob/master/LICENSE).
 
 ##### Built With :heart:
