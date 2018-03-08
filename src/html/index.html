@@ -4,7 +4,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="Content-Language" content="en">
-		<title>Caleb Nance | Frontend Developer | javascript, scss, gulp, git, angular, page speed</title>
+		<title>Caleb Nance | Sr. Applications Developer | javascript, reactnative, accessibility, page speed</title>
 		<meta name="description" content="Caleb Nance developer frontend nyc javascript gulp scss"/>
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-title" content="calebnance">
@@ -17,50 +17,28 @@
 		<meta name="msapplication-TileColor" content="#1d2d3a">
 		<meta name="theme-color" content="#1d2d3a">
 		<style>
-			body {background-color: #1d2d3a;color: #abb2bf;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;font-size: 20px;font-weight: 200;line-height: 1.42857143;margin: 0;padding-top: 31px;}
-			#content {opacity: 0;}
-			.animated {-webkit-animation-duration: 1000ms;animation-duration: 1000ms;-webkit-animation-fill-mode: both;animation-fill-mode: both;}
-			@-webkit-keyframes fadeIn {from { opacity: 0; } to { opacity: 1; }}
-			@keyframes fadeIn {from { opacity: 0; } to { opacity: 1; }}
-			.fadeIn {-webkit-animation-name: fadeIn;animation-name: fadeIn;}
+			body {background-color: #1d2d3a;color: #abb2bf;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;font-size: 20px;font-weight: 200;line-height: 1.42857143;margin: 0;padding-top: 31px;} #container {opacity: 0;} .animated {-webkit-animation-duration: 1000ms;animation-duration: 1000ms;-webkit-animation-fill-mode: both;animation-fill-mode: both;} @-webkit-keyframes fadeIn {from { opacity: 0; } to { opacity: 1; }} @keyframes fadeIn {from { opacity: 0; } to { opacity: 1; }} .fadeIn {-webkit-animation-name: fadeIn;animation-name: fadeIn;}
 		</style>
-		<script type="application/ld+json">{"@context": "http://schema.org/","@type": "Person","name": "Caleb Nance","jobTitle": "Senior Frontend Developer","address": {"@type": "PostalAddress","addressLocality": "Brooklyn","addressRegion": "NY"}}</script>
+		<script type="application/ld+json">{"@context": "http://schema.org/","@type": "Person","name": "Caleb Nance","jobTitle": "Senior Applications Developer","address": {"@type": "PostalAddress","addressLocality": "Manhattan","addressRegion": "NY"}}</script>
 	</head>
 	<body>
 
-		<div id="content">
+		<div id="container">
 			<main>
 				<h1>Hi, I'm Caleb!</h1>
-				<h2>A passionate Frontend Developer.</h2>
-				<address aria-label="Brooklyn, NY">
-					Brooklyn, NY
-				</address>
-				<p>I create cool, usable things on the internet.</p>
-				<p>Technologies I've been into recently include:</p>
+				<p>Technologies and topics I've been into recently include:</p>
 				<ul>
 					<li>
-						<strong>React</strong>
+						<strong>React</strong> & <strong>ReactNative</strong>
 					</li>
 					<li>
-						<strong>ReactNative</strong>
+						<strong>PHP</strong> <strong>Laravel/Lumen</strong>
 					</li>
 					<li>
-						<strong>Laravel/Lumen</strong>
+						<strong>Accessibility</strong>
 					</li>
 					<li>
-						<strong>NodeJs</strong>
-					</li>
-					<li>
-						<strong>Expo</strong>
-					</li>
-					<li>
-						<strong>AR</strong>
-					</li>
-					<li>
-						<strong>Gulp</strong>
-					</li>
-					<li>
-						<strong>SCSS</strong>
+						<strong>AR / Machine Learning</strong>
 					</li>
 				</ul>
 
@@ -69,10 +47,10 @@
 				<div class="spacer"></div>
 
 				<p class="social">
-					<a href="https://twitter.com/calebnance" class="twitter" role="button" aria-label="go to my twitter account">twitter</a>
-					<a href="https://codepen.io/calebnance" class="codepen" role="button" aria-label="go to my code pen account">codepen</a>
 					<a href="https://github.com/calebnance" class="github" role="button"aria-label="go to my github account">github</a>
+					<a href="https://twitter.com/calebnance" class="twitter" role="button" aria-label="go to my twitter account">twitter</a>
 					<a href="https://stackoverflow.com/users/1308719/caleb-nance" class="stackoverflow" role="button" aria-label="go to my stack overflow account">stackoverflow</a>
+					<a href="https://codepen.io/calebnance" class="codepen" role="button" aria-label="go to my code pen account">codepen</a>
 					<a href="https://teamtreehouse.com/calebnance" class="teamtreehouse" role="button" aria-label="go to my team treehouse account">teamtreehouse</a>
 					<a href="https://www.linkedin.com/in/calebnance/" class="linkedin" role="button" aria-label="go to my linkedin account">linkedin</a>
 					<a href="https://www.facebook.com/calebnance" class="facebook" role="button" aria-label="go to my facebook account">facebook</a>
@@ -81,20 +59,27 @@
 		</div>
 
 		<noscript id="deferred-styles">
-			<link href="https://s3.amazonaws.com/calebnance/calebnance/styles.min.css" rel="stylesheet" media="screen">
+			<!-- <link href="https://s3.amazonaws.com/calebnance/calebnance/styles.min.css" rel="stylesheet" media="screen"> -->
+			<link href="css/styles.min.css" rel="stylesheet" media="screen">
 		</noscript>
 
 		<script>
 			// service worker
 			if('serviceWorker' in navigator) {
-				navigator.serviceWorker.register('service-worker.js', { scope: '/' })
-					.then(function(registration) {
-						// service worker registered
-					}
-				);
-				navigator.serviceWorker.ready.then(function(registration) {
-					// service worker ready
-				});
+				navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister()
+            console.log('Service Worker Unregistered');
+          }
+        });
+				// navigator.serviceWorker.register('service-worker.js', { scope: '/' })
+				// 	.then(function(registration) {
+				// 		// service worker registered
+				// 	}
+				// );
+				// navigator.serviceWorker.ready.then(function(registration) {
+				// 	// service worker ready
+				// });
 			}
 
 			var loadDeferredStyles = function() {
@@ -110,7 +95,7 @@
 			if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
 			else window.addEventListener('load', loadDeferredStyles);
 			setTimeout(function(e){
-				var d = document.getElementById('content');
+				var d = document.getElementById('container');
 				d.className += " animated fadeIn";
 			}, 400);
     </script>

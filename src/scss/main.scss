@@ -2,8 +2,6 @@
 
 // variables
 $mainColor: #abb2bf;
-// $mainBgColor: #282c34;
-// $mainBgColor: #28200f;
 $mainBgColor: #1d2d3a;
 
 $colorBlack: #000;
@@ -27,6 +25,11 @@ body {
 	font-size: 20px;
 	font-weight: 200;
 	padding-top: 32px;
+}
+
+#container {
+	margin: 0 auto;
+	max-width: 800px;
 }
 
 main {
@@ -79,86 +82,78 @@ a {
 	padding: 4px 8px;
 
 	&.blog {
-  	background-color: $blog;
-		color: $colorWhite;
+		background-color: transparent;
+		border-color: $blog;
 
     &:hover {
-			background-color: transparent;
-    	border-color: $blog;
-			color: $colorWhite;
+			background-color: $blog;
     }
   }
 
   &.codepen {
-  	background-color: $codepen;
-		color: $colorGrey;
+		background-color: transparent;
+		border-color: $codepen;
 
     &:hover {
-			background-color: transparent;
-    	border-color: $codepen;
-			color: $colorWhite;
+			background-color: $codepen;
+			color: $colorGrey;
     }
   }
 
 	&.facebook {
-		background-color: $facebook;
-		color: $colorWhite;
+		background-color: transparent;
+		border-color: $facebook;
 
 		&:hover {
-			background-color: transparent;
-			border-color: $facebook;
+			background-color: $facebook;
 		}
 	}
 
 	&.github {
-		background-color: $github;
-		color: $colorWhite;
+		background-color: transparent;
+		border-color: $github;
 
 		&:hover {
-			background-color: transparent;
-			border-color: $github;
+			background-color: $github;
 		}
 	}
 
 	&.linkedin {
-		background-color: $linkedin;
+		background-color: transparent;
+		border-color: $linkedin;
 
 		&:hover {
-			background-color: transparent;
-			border-color: $linkedin;
+			background-color: $linkedin;
 		}
 	}
 
 	&.twitter {
-		background-color: $twitter;
-		color: $colorBlack;
+		background-color: transparent;
+		border-color: $twitter;
 
 		&:hover {
-			background-color: transparent;
-			border-color: $twitter;
-			color: $colorWhite;
+			background-color: $twitter;
+			color: $colorBlack;
 		}
 	}
 
 	&.stackoverflow {
-		background-color: $stackoverflow;
-		color: $colorGrey;
+		background-color: transparent;
+		border-color: $stackoverflow;
 
 		&:hover {
-			background-color: transparent;
-			border-color: $stackoverflow;
-			color: $colorWhite;
+			background-color: $stackoverflow;
+			color: $colorGrey;
 		}
 	}
 
 	&.teamtreehouse {
-		background-color: $teamtreehouse;
-		color: $colorGrey;
+		background-color: transparent;
+		border-color: $teamtreehouse;
 
 		&:hover {
-			background-color: transparent;
-			border-color: $teamtreehouse;
-			color: $colorWhite;
+			background-color: $teamtreehouse;
+			color: $colorGrey;
 		}
 	}
 }
