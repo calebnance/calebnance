@@ -26,6 +26,7 @@
     "gulp-autoprefixer": "^4.0.0",
     "gulp-clean-css": "^3.0.2",
     "gulp-gzip": "^1.4.2",
+    "gulp-html-replace": "^1.6.2",
     "gulp-htmlmin": "^3.0.0",
     "gulp-minify-inline": "^1.0.0",
     "gulp-rename": "^1.2.2",

@@ -4,6 +4,7 @@ var del = require('del');
 var gulp = require('gulp');
 var gzip = require('gulp-gzip');
 var htmlmin = require('gulp-htmlmin');
+var htmlreplace = require('gulp-html-replace');
 var minifyInline = require('gulp-minify-inline');
 var notifier = require('node-notifier');
 var rename = require('gulp-rename');
@@ -14,7 +15,8 @@ var uglify = require('gulp-uglify');
 
 var isProduction = process.env.NODE_ENV === 'production' ? true : false;
 var distFolder = isProduction ? 'dist_prod' : 'dist_local';
-
+var cdn = 'https://s3.amazonaws.com/calebnance/';
+var assetPath = isProduction ? cdn : '';
 
 var mainTasks = [
   'clean',
@@ -80,12 +82,27 @@ gulp.task('clean', function() {
 gulp.task('html', function() {
   var stream = gulp.src('./src/html/*.html')
 
+  var htmlReplaceOptions = {
+    keepUnassigned: false,
+    keepBlockTags: false,
+    resolvePaths: false
+  };
+
+  stream = stream.pipe(htmlreplace({
+    css: `${assetPath}css/styles.min.css`,
+    img: {
+      src: `${assetPath}img/`
+    }
+  }, htmlReplaceOptions));
+
+
+
   if (isProduction) {
     stream = stream.pipe(minifyInline())
-    .pipe(htmlmin({
-      collapseWhitespace: true,
-      removeComments: true
-    }));
+      .pipe(htmlmin({
+        collapseWhitespace: true,
+        removeComments: true
+      }));
   }
 
   return stream.pipe(gulp.dest(distFolder + '/'));

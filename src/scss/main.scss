@@ -35,6 +35,20 @@ body {
 
 main {
 	margin: 0 16px;
+	position: relative;
+}
+
+img.profile {
+	display: none;
+
+	@media (min-width: 768px) {
+		background: #f1f1f1;
+		border-radius: 3px;
+		display: block;
+		padding: 4px;
+		position: absolute;
+		right: 0;
+	}
 }
 
 h1 {
