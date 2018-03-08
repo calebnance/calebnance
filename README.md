@@ -12,12 +12,21 @@ calebnance.com
     - Mobile Optimization: **99/100**
     - Desktop Optimization: **99/100**
 
-[Gulp](https://www.npmjs.com/package/gulp) Packages Used
+### Installation / Builds
+* Run: `npm install`
+* Local Build + Serve + Watch
+    * Run: `npm run dev`
+* Production Build
+    * Run: `npm run prod`
+
+### [Gulp](https://www.npmjs.com/package/gulp) Packages Used
 --------------------
 - [autoprefixer](https://www.npmjs.com/package/gulp-autoprefixer)
 - [clean css](https://www.npmjs.com/package/gulp-clean-css)
 - [del](https://www.npmjs.com/package/del)
-- [htmlmin](https://www.npmjs.com/package/gulp-htmlmin)
+- [html replace](https://www.npmjs.com/package/gulp-html-replace)
+- [html min](https://www.npmjs.com/package/gulp-htmlmin)
+- [minify html inline](https://www.npmjs.com/package/gulp-minify-inline)
 - [node notifier](https://www.npmjs.com/package/node-notifier)
 - [nodemon](https://www.npmjs.com/package/nodemon)
 - [rename](https://www.npmjs.com/package/gulp-rename)
@@ -27,8 +36,6 @@ calebnance.com
 - [uglify](https://www.npmjs.com/package/gulp-uglify)
 
 With simple gulp tasks: `gulp server`, `gulp watch`, `gulp dist`, and `gulp clean`.
-
-***TODO:*** Optimize gulp dev process/build
 
 Creators
 --------------------
