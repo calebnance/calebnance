@@ -94,24 +94,6 @@
 		</noscript>
 
 		<script>
-			// service worker
-			if('serviceWorker' in navigator) {
-				navigator.serviceWorker.getRegistrations().then(function(registrations) {
-          for(let registration of registrations) {
-            registration.unregister()
-            console.log('Service Worker Unregistered');
-          }
-        });
-				// navigator.serviceWorker.register('service-worker.js', { scope: '/' })
-				// 	.then(function(registration) {
-				// 		// service worker registered
-				// 	}
-				// );
-				// navigator.serviceWorker.ready.then(function(registration) {
-				// 	// service worker ready
-				// });
-			}
-
 			var loadDeferredStyles = function() {
 				var addStylesNode = document.getElementById("deferred-styles");
 				var replacement = document.createElement("div");
