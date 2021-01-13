@@ -1,189 +1,442 @@
-var autoprefixer = require('gulp-autoprefixer');
-var cleanCSS = require('gulp-clean-css');
-var del = require('del');
-var gulp = require('gulp');
-var gzip = require('gulp-gzip');
-var htmlmin = require('gulp-htmlmin');
-var htmlreplace = require('gulp-html-replace');
-var minifyInline = require('gulp-minify-inline');
-var notifier = require('node-notifier');
-var rename = require('gulp-rename');
-var sass = require('gulp-sass');
-var shell = require('gulp-shell');
-var stripDebug = require('gulp-strip-debug');
-var uglify = require('gulp-uglify');
+const browserSync = require('browser-sync').create();
+const chalk = require('chalk');
+const cleanCSS = require('gulp-clean-css');
+const del = require('del');
+const data = require('gulp-data');
+const fs = require('fs');
+const gulp = require('gulp');
+const htmlmin = require('gulp-htmlmin');
+const matter = require('gray-matter');
+const notifier = require('node-notifier');
+const nunjucksMd = require('gulp-nunjucks-md');
+const nunjucksRender = require('gulp-nunjucks-render');
+const path = require('path');
+const rename = require('gulp-rename');
+const replace = require('gulp-replace-task');
+const replaceHTML = require('gulp-html-replace');
+const sass = require('gulp-sass');
+const uglify = require('gulp-uglify');
 
-var isProduction = process.env.NODE_ENV === 'production' ? true : false;
-var distFolder = isProduction ? 'dist_prod' : 'dist_local';
-var cdn = 'https://s3.amazonaws.com/calebnance/';
-var assetPath = isProduction ? cdn : '';
+// grab the configuration file
+const siteConfig = require('./site-config.json');
 
-var mainTasks = [
-  'clean',
-  'sass',
-  'html',
-  'img',
-  'htaccess',
-  'pwa'
-];
+// import utility functions
+const util = require('./utility-functions');
 
-var devTasks = [
-  'server',
-  'watch'
-];
+// breakout reload for usage after file changes detected
+const reload = browserSync.reload;
 
-var prodTasks = [];
+// const sep = new Array(10).join('+-');
+// console.log('sep', sep);
 
-// start dev server (express)
-gulp.task('server', shell.task(['nodemon server.js']));
+/******************************************************************************\
+ * ENVIRONMENT HANDLING
+\******************************************************************************/
+const envMode = process.env.NODE_ENV;
+const isProduction = process.env.NODE_ENV === 'prod';
 
-// distribution gulp task + watch
-gulp.task('dist', ['clean'], function() {
+// a little high level configuration
+const rootDirs = {
+  dev: 'static_dev',
+  prod: 'static_prod'
+};
+const directory = rootDirs[envMode];
 
+/******************************************************************************\
+ * TASK HANDLING DEPENDING ON ENVIRONMENT
+\******************************************************************************/
+// html tasks
+const htmlTasks = ['dataStart', 'nunjucks', 'markdown', 'dataEnd'];
+
+// asset tasks
+const assetTasks = ['fonts', 'images', 'videos'];
+
+// shared tasks
+const sharedTasks = ['clean', 'scss', 'js', ...htmlTasks, ...assetTasks];
+
+// dev ONLY tasks
+const devTasks = ['serve'];
+
+// production ONLY tasks
+const prodTasks = ['notify-completed'];
+
+// final build tasks
+const buildTasks = isProduction
+  ? sharedTasks.concat(prodTasks)
+  : sharedTasks.concat(devTasks);
+
+/******************************************************************************\
+ * NOTIFY COMPLETED BUILD
+\******************************************************************************/
+gulp.task('notify-completed', done => {
+  const lineSep =
+    ' --------------------------------------------------------------------- ';
+  const modeUpper = envMode.toUpperCase();
+  const msg1 = util.lineStretchToEnd(` Completed build: ${modeUpper}`, lineSep);
+  const msg2 = util.lineStretchToEnd(` in directory: ./${directory}/`, lineSep);
+  const msg = `${lineSep}\n${msg1}\n${msg2}\n${lineSep}`;
+
+  // display build completed message to developer
+  console.log(chalk.black.bgGreen(msg));
+
+  done();
+});
+
+/******************************************************************************\
+ * CLEAN STATIC DIRECTORIES
+\******************************************************************************/
+gulp.task('clean', () => {
+  return del([`${rootDirs.dev}/**/*`, `${rootDirs.prod}/**/*`]);
+});
+
+/******************************************************************************\
+ * SCSS => CSS
+\******************************************************************************/
+gulp.task('scss', () => {
+  // grab all scss and compile into css
+  let sourceFile = gulp
+    .src('./src/scss/**/*.scss')
+    .pipe(sass().on('error', error => pingError(error, 'scss')));
+
+  // minify css, if production build
   if (isProduction) {
-    gulp.start(mainTasks.concat(prodTasks));
-  } else {
-    gulp.start(mainTasks.concat(devTasks));
+    // clean css
+    // https://github.com/jakubpawlowicz/clean-css#compatibility-modes
+    console.log(chalk.black.bgBlue('-- CSS Files'));
+    const sourceFileMinified = gulp
+      .src('./src/scss/**/*.scss')
+      .pipe(sass().on('error', error => pingError(error, 'scss')))
+      .pipe(
+        cleanCSS({ compatibility: '*' }, details => {
+          const origSize = util.formatBytes(details.stats.originalSize);
+          const miniSize = util.formatBytes(details.stats.minifiedSize);
+
+          console.log(
+            `${details.name}: ${chalk.black.red(
+              origSize
+            )} => ${chalk.black.bgGreen(miniSize)}`
+          );
+        })
+      )
+      .pipe(
+        rename(path => {
+          path.basename += '.min';
+        })
+      )
+      .pipe(gulp.dest(`./${directory}/css`))
+      .on('end', () => {
+        console.log(chalk.black.bgBlue('------------'));
+      });
   }
 
+  return sourceFile.pipe(gulp.dest(`./${directory}/css`));
 });
 
-/***************
- * watch tasks *
- ***************/
-gulp.task('watch', [
-  'js:watch',
-  'sass:watch',
-  'html:watch'
-]);
-
-/* js watch */
-gulp.task('js:watch', function() {
-  gulp.watch('./src/js/**/*.js', ['js']);
-});
-
-/* sass watch */
-gulp.task('sass:watch', function() {
-  gulp.watch('./src/scss/**/*.scss', ['sass']);
-});
-
-/* html watch */
-gulp.task('html:watch', function() {
-  gulp.watch('./src/**/*.html', ['html']);
-});
-
-// clean up old dist folder
-gulp.task('clean', function() {
-
-  return del(['dist_prod', 'dist_local']);
-});
-
-// html task (minification)
-gulp.task('html', function() {
-  var stream = gulp.src('./src/html/*.html')
-
-  var htmlReplaceOptions = {
-    keepUnassigned: false,
-    keepBlockTags: false,
-    resolvePaths: false
-  };
-
-  stream = stream.pipe(htmlreplace({
-    css: `${assetPath}css/styles.min.css`,
-    img: {
-      src: `${assetPath}img/`
-    }
-  }, htmlReplaceOptions));
-
-
+/******************************************************************************\
+ * javascript
+\******************************************************************************/
+gulp.task('js', () => {
+  // grab all js
+  let sourceFile = gulp.src('./src/js/**/*.js');
 
   if (isProduction) {
-    stream = stream.pipe(minifyInline())
-      .pipe(htmlmin({
+    // minify js & rename
+    sourceFile = sourceFile.pipe(uglify()).pipe(
+      rename(path => {
+        path.basename += '.min';
+      })
+    );
+  }
+
+  return sourceFile.pipe(gulp.dest(`./${directory}/js`));
+});
+
+/******************************************************************************\
+ * NUNJUCKS => HTML
+\******************************************************************************/
+gulp.task('nunjucks', () => {
+  const defaultData = require('./src/html/default-data.json');
+
+  let sourceFile = gulp
+    .src('./src/html/pages/**/*.+(nunjucks|nj|njk)')
+    .pipe(
+      data(file => {
+        // get direct path of page
+        const fileInfo = util.parseFilePath(file.path);
+
+        // set path to json file, specific to the HTML page we are compiling!
+        const pathToFile = `./src/html/data${fileInfo.subPath}.json`;
+
+        // delete cache, we always want the latest json data...
+        delete require.cache[require.resolve(pathToFile)];
+
+        // log that we are grabbing data
+        console.log('grabbing data from: ' + pathToFile);
+
+        // grab specific page data
+        const pageData = require(pathToFile);
+        const combinedData = {
+          ...defaultData,
+          ...pageData
+        };
+        // console.log('pageData', pageData);
+        // console.log('combinedData', combinedData);
+
+        // add category
+        if (pageData.category in this.categories) {
+          this.categories[pageData.category].push(`${fileInfo.subPath}.html`);
+        } else {
+          this.categories[pageData.category] = [`${fileInfo.subPath}.html`];
+        }
+
+        // set canonical
+        combinedData.canonical = fileInfo.fullPath;
+        // combinedData.content = '<h1>hello world</h1>';
+
+        // add to pages
+        this.pages.push(fileInfo.fullPath);
+
+        return combinedData;
+      }).on('error', pingError)
+    )
+    .pipe(
+      nunjucksRender({
+        path: './src/html/templates'
+      }).on('error', error => pingError(error, 'nunjucks'))
+    );
+
+  // replace CSS/JS
+  const baseFile = isProduction ? 'base.min' : 'base';
+  sourceFile = sourceFile.pipe(
+    replaceHTML({
+      css: `<link type="text/css" rel="stylesheet" href="/css/${baseFile}.css">`,
+      js: `<script src="/js/${baseFile}.js"></script>`
+    })
+  );
+
+  // is production build?
+  // - minify html
+  // - string & replace asset paths
+  if (isProduction) {
+    sourceFile = sourceFile
+      .pipe(
+        htmlmin({
+          collapseWhitespace: true,
+          removeComments: true
+        })
+      )
+      .pipe(
+        replace({
+          patterns: [
+            {
+              match: /src="\/images\//g,
+              replacement: `src="${siteConfig.baseUrl}/images/`
+            },
+            {
+              match: /src="\/videos\//g,
+              replacement: `src="${siteConfig.baseUrl}/videos/`
+            }
+          ]
+        })
+      );
+  }
+
+  // create supporting files
+  // sourceFile.on('end', () => {
+  //   console.log(chalk.black.bgBlue('------------'));
+  //   console.log('categories', categories);
+  //   console.log(chalk.black.bgBlue('------------'));
+  // });
+
+  return sourceFile.pipe(gulp.dest(`./${directory}`));
+});
+
+/******************************************************************************\
+ * MARKDOWN => HTML
+\******************************************************************************/
+gulp.task('markdown', () => {
+  const defaultData = require('./src/html/default-data.json');
+
+  let sourceFile = gulp
+    .src('./src/html/pages/**/*.+(md|markdown)')
+    .pipe(
+      data(async file => {
+        // get direct path of page
+        const fileInfo = util.parseFilePath(file.path);
+
+        const fileContent = fs.readFileSync(file.path, 'utf8');
+        const pinkMatter = matter(fileContent);
+        const pageData = pinkMatter.data;
+
+        // add category
+        if (pageData.category in this.categories) {
+          this.categories[pageData.category].push(`${fileInfo.subPath}.html`);
+        } else {
+          this.categories[pageData.category] = [`${fileInfo.subPath}.html`];
+        }
+
+        const combinedData = {
+          ...defaultData,
+          ...pageData,
+          canonical: fileInfo.fullPath
+        };
+        // console.log('combinedData');
+        // console.log(combinedData);
+
+        // add to pages
+        this.pages.push(fileInfo.fullPath);
+
+        return combinedData;
+      }).on('error', pingError)
+    )
+    .pipe(
+      nunjucksMd({
+        path: ['./src/html/templates/']
+      })
+    );
+
+  // replace CSS/JS
+  const baseFile = isProduction ? 'base.min' : 'base';
+  sourceFile = sourceFile.pipe(
+    replaceHTML({
+      css: `<link type="text/css" rel="stylesheet" href="/css/${baseFile}.css">`,
+      js: `<script src="/js/${baseFile}.js"></script>`
+    })
+  );
+
+  // minify html, if production build
+  if (isProduction) {
+    sourceFile = sourceFile.pipe(
+      htmlmin({
         collapseWhitespace: true,
         removeComments: true
-      }));
+      })
+    );
   }
 
-  return stream.pipe(gulp.dest(distFolder + '/'));
+  return sourceFile.pipe(gulp.dest(`./${directory}`));
 });
 
-// sass to css (autoprefixer + minification + rename)
-gulp.task('sass', function() {
-  var stream = gulp.src('./src/scss/main.scss')
-    .pipe(sass().on('error', notifyDev))
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
-    }).on('error', notifyDev))
-    .pipe(cleanCSS())
-    .pipe(rename({
-      basename: 'styles.min'
-    }));
+gulp.task('dataStart', done => {
+  this.categories = [];
+  this.pages = [];
+
+  done();
+});
+
+gulp.task('dataEnd', done => {
+  console.log('---------------------');
+  // console.log('categories', this.categories);
+  // console.log('_+_+_+_+_+_+_+_+_+_+_');
+  // console.log('---------------------');
+
+  console.log('page count', chalk.black.bgGreen(` ${this.pages.length} `));
+  console.log('_+_+_+_+_+_+_+_+_+_+_');
+  console.log('---------------------');
+
+  console.log('pages');
+  console.log(this.pages);
+  console.log('_+_+_+_+_+_+_+_+_+_+_');
+  console.log('---------------------');
 
   if (isProduction) {
-    stream = stream.pipe(gzip({
-      append: false
-    }));
+    // create sitemap
+    util.createSitemap(this.pages);
   }
 
-  return stream.pipe(gulp.dest('./' + distFolder + '/css'));
+  done();
 });
 
-gulp.task('img', function() {
-
-  return gulp.src('./src/assets/img/**')
-    .pipe(gulp.dest(distFolder + '/img'));
+/******************************************************************************\
+ * MOVE FONTS
+\******************************************************************************/
+gulp.task('fonts', () => {
+  return gulp
+    .src('./src/assets/fonts/**/*')
+    .pipe(gulp.dest(`./${directory}/fonts`));
 });
 
-/*******
- * PWA *
- *******/
-gulp.task('pwa', ['manifest', 'serviceWorker'], function() {
-
-  return gulp.src('./manifest.json')
-    .pipe(gulp.dest(distFolder));
+/******************************************************************************\
+ * MOVE IMAGES
+\******************************************************************************/
+gulp.task('images', () => {
+  return gulp
+    .src('./src/assets/images/**/*')
+    .pipe(gulp.dest(`./${directory}/images`));
 });
 
-gulp.task('manifest', function() {
-  // move this to root (dist)
-
-  return gulp.src('./src/server/manifest.json')
-    .pipe(gulp.dest(distFolder));
+/******************************************************************************\
+ * MOVE VIDEOS
+\******************************************************************************/
+gulp.task('videos', () => {
+  return gulp
+    .src('./src/assets/videos/**/*')
+    .pipe(gulp.dest(`./${directory}/videos`));
 });
 
-gulp.task('serviceWorker', function() {
-  // move this to root (dist)
-
-  return gulp.src('./src/js/service-worker.js')
-    .pipe(gulp.dest(distFolder));
-});
-
-// .htaccess moved over
-gulp.task('htaccess', function() {
-  // move this to root (dist)
-
-  return gulp.src('./src/server/.htaccess')
-    .pipe(gulp.dest(distFolder));
-});
-
-// this will notify the dev working.. something is wrong
-// with a visual and sound! i don't care how loud your music is sir...
-function notifyDev(error) {
-  // if you want details of the error in the console
-  // console.log(error.toString());
-
-  // display a message to the dev!
-  notifier.notify({
-    'contentImage': 'logo.png',
-    'icon': false,
-    'message': 'Check that code son..',
-    'sound': 'Basso',
-    'timeout': 10,
-    'title': 'calebnance.com',
-    'wait': true
+/******************************************************************************\
+ * serve up static files (with hot-reload)
+ *
+ * watches for changes made to html(nunjucks|markdown) + json + scss + js
+ * hot-reloads browser(s) connected
+\******************************************************************************/
+gulp.task('serve', () => {
+  browserSync.init({
+    server: {
+      baseDir: `./${directory}/`,
+      serveStaticOptions: {
+        extensions: ['html']
+      }
+    },
+    port: 8080,
+    ui: {
+      port: 8081
+    },
+    plugins: ['bs-console-qrcode']
   });
 
-  // doesn't kill the build with error..
-  this.emit('end');
-}
+  // watches for any file change and re-compile
+  gulp.watch(
+    './src/html/**/*.+(js|json|nunjucks|nj|njk|md|markdown)',
+    gulp.series(htmlTasks)
+  );
+  gulp.watch('./src/scss/**/*.scss', gulp.series('scss'));
+  gulp.watch('./src/js/**/*.js', gulp.series('js'));
+
+  // watch for output change and hot-reload to show latest
+  gulp.watch(`./${directory}/**/*.(html|css|js)`).on('change', reload);
+});
+
+/******************************************************************************\
+ * build tasks
+ *
+ * clean directories
+ * compile: scss
+ * compile: nunjucks
+ * compile: markdown
+ * move fonts/images/videos over
+ *
+ * start server (DEV ONLY)
+\******************************************************************************/
+gulp.task('build', gulp.series(buildTasks));
+
+/******************************************************************************\
+ * notify developer at the os level, an error has occurred 
+\******************************************************************************/
+pingError = (error, type) => {
+  // if you want details of the error in the console
+  // console.log(error);
+  console.log(error.message);
+  console.log('=============================');
+  console.log('=+=+=+=+=+=+=+=+=+=+=+=+=+=+=');
+  // console.log(error.toString());
+
+  notifier.notify({
+    title: `${type} error!`,
+    message: error.message,
+    icon: path.join(__dirname, 'icon.png'),
+    sound: true
+  });
+
+  process.exit(1);
+};

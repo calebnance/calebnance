@@ -1,6 +1,7 @@
-node_modules/
-dist/
-dist_local/
-dist_prod/
-*.log
-package-lock.json
+node_modules/**/*
+.DS_Store
+
+static_dev/
+static_prod/
+
+.vercel
