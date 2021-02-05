@@ -158,7 +158,7 @@ gulp.task('nunjucks', () => {
   const defaultData = require('./src/html/default-data.json');
 
   let sourceFile = gulp
-    .src('./src/html/pages/**/*.+(nunjucks|nj|njk)')
+    .src('./src/html/pages/**/*.njk')
     .pipe(
       data(file => {
         // get direct path of page
@@ -377,7 +377,7 @@ gulp.task('videos', () => {
 /******************************************************************************\
  * serve up static files (with hot-reload)
  *
- * watches for changes made to html(nunjucks|markdown) + json + scss + js
+ * watches for changes made to html(njk|markdown) + json + scss + js
  * hot-reloads browser(s) connected
 \******************************************************************************/
 gulp.task('serve', () => {
@@ -397,11 +397,16 @@ gulp.task('serve', () => {
 
   // watches for any file change and re-compile
   gulp.watch(
-    './src/html/**/*.+(js|json|nunjucks|nj|njk|md|markdown)',
+    './src/html/**/*.+(js|json|njk|md|markdown)',
+    { ignoreInitial: false },
     gulp.series(htmlTasks)
   );
-  gulp.watch('./src/scss/**/*.scss', gulp.series('scss'));
-  gulp.watch('./src/js/**/*.js', gulp.series('js'));
+  gulp.watch(
+    './src/scss/**/*.scss',
+    { ignoreInitial: false },
+    gulp.series('scss')
+  );
+  gulp.watch('./src/js/**/*.js', { ignoreInitial: false }, gulp.series('js'));
 
   // watch for output change and hot-reload to show latest
   gulp.watch(`./${directory}/**/*.(html|css|js)`).on('change', reload);
