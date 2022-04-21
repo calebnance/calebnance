@@ -7,51 +7,72 @@
 
 {# setting page specific content #}
 {% block content %}
-  <div class="container">
-    <main>
-      <img src="/images/caleb-nance.jpg" alt="Caleb Nance" title="Caleb Nance" class="profile">
-      <h1>Hi, I'm Caleb!</h1>
-
-      <p>Technologies and topics I've been into recently:</p>
-      <ul>
-        <li>
-          <strong>React</strong> & <strong>React Native (Expo)</strong>
-        </li>
-        <li>
-          <strong>PHP</strong> <strong>Laravel/Lumen</strong>
-        </li>
-        <li>
-          <strong>Next.js & Vercel</strong>
-        </li>
-        <li>
-          <strong>Accessibility</strong>
-        </li>
-      </ul>
+  <main>
+    <div class="container">
+      <div class="flex-row align-center">
+        <img src="/images/caleb-nance-profile.jpg" alt="Caleb Nance" title="Caleb Nance" class="profile">
+        <div>
+          <h1>Hi, I'm Caleb!</h1>
+          <h2>Design Technology Lead at eBay</h2>
+        </div>
+      </div>
       
-      <p>Some things I've created:</p>
-      <ul>
-        <li>
-          <a href="https://cardup.app" class="carduptrading" target="_blank" rel="noopener">CardUp Trading</a>
-          <br />
-          (iOS App with React Native)
-        </li>
-        <li>
-          <a href="https://trackscoreapp.com" class="trackscore" target="_blank" rel="noopener">trackscore</a>
-          <br />
-          (iOS and Android App with React Native)
-        </li>
-        <li>
-          <a href="https://github.com/calebnance/feather-ssg" class="feather-ssg" target="_blank" rel="noopener">feather ssg</a>
-          <br />
-          (web starter with production in mind)
-        </li>
-        <li>
-          <a href="https://learnreactnative.dev" class="learnreactnative" target="_blank" rel="noopener">Learn React Native</a>
-          <br />
-          (from example of popular apps)
-        </li>
-      </ul>
+      <div class="spacer"></div>
       
+      <div class="flex-layout space-between">
+        <div class="col">
+          <p>Some things I've been into:</p>
+          <ul>
+            <li>
+              <strong>React</strong> & <strong>Expo/React Native</strong>
+            </li>
+            <li>
+              <strong>Creating Figma Plugins</strong>
+            </li>
+            <li>
+              <strong>PHP</strong> <strong>Laravel/Lumen</strong>
+            </li>
+            <li>
+              <strong>Accessibility</strong>
+            </li>
+            <li>
+              <strong>Electron</strong>
+            </li>
+            <li>
+              <strong>Next.js & Vercel</strong>
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <p>Some things I've created:</p>
+          <ul>
+            <li>
+              <a href="https://cardup.app" class="carduptrading" target="_blank" rel="noopener">CardUp Trading</a>
+              iOS App with React Native
+            </li>
+            <li>
+              <a href="https://apps.apple.com/us/app/exif-remove/id1597151358?platform=iphone" class="exifremove" target="_blank" rel="noopener">exif remove</a>
+              iOS App with React Native
+            </li>
+            <li>
+              <a href="https://play.google.com/store/apps/details?id=com.calebnance.wordscholar" class="wordscholar" target="_blank" rel="noopener">Word Scholar</a>
+              Android and <strike>iOS</strike> App with React Native
+            </li>
+            <li>
+              <a href="https://trackscoreapp.com" class="trackscore" target="_blank" rel="noopener">trackscore</a>
+              iOS and Android App with React Native
+            </li>
+            <li>
+              <a href="https://github.com/calebnance/feather-ssg" class="feather-ssg" target="_blank" rel="noopener">feather ssg</a>
+              web starter with production in mind
+            </li>
+            <li>
+              <a href="https://learnreactnative.dev" class="learnreactnative" target="_blank" rel="noopener">Learn React Native</a>
+              from example of popular apps
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <p>I write about dev/nerd things on my <a href="https://blog.calebnance.com" class="blog" role="button" aria-label="go to my blog" target="_blank" rel="noopener">blog</a></p>
 
@@ -63,8 +84,10 @@
         <a href="https://stackoverflow.com/users/1308719/caleb-nance" class="stackoverflow" role="button" aria-label="go to my stack overflow account" target="_blank" rel="noopener">stackoverflow</a>
         <a href="https://www.linkedin.com/in/calebnance/" class="linkedin" role="button" aria-label="go to my linkedin account">linkedin</a>
       </p>
-    </main>
-  </div>
+      
+      <div class="spacer-lg"></div>
+    </div>
+  </main>
 {% endblock %}
 
 {# setting page specific js #}
